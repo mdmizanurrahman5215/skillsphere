@@ -1,50 +1,42 @@
 "use client";
 
-import React, { createContext, useState, useContext, useEffect } from "react";
+import React, { createContext, useContext } from "react";
+import { signIn, signUp, useSession, authClient } from "@/lib/auth-client";
 
 const AuthContext = createContext();
 
 export function AuthProvider({ children }) {
-  const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const { data: session, isLoading } = useSession();
+  const user = session?.user || null;
+  const isLoggedIn = !!user;
 
-  // Initialize from localStorage
-  useEffect(() => {
-    const storedUser = localStorage.getItem("user");
-    if (storedUser) {
-      setUser(JSON.parse(storedUser));
-      setIsLoggedIn(true);
-    }
-    setLoading(false);
-  }, []);
-
-  // Login function
-  const login = (userData) => {
-    setUser(userData);
-    setIsLoggedIn(true);
-    localStorage.setItem("user", JSON.stringify(userData));
+  // Login with Better Auth
+  const login = async ({ email, password }) => {
+    return signIn({ email, password });
   };
 
-  // Logout function
-  const logout = () => {
-    setUser(null);
-    setIsLoggedIn(false);
-    localStorage.removeItem("user");
+  // Register with Better Auth
+  const register = async ({ name, email, password }) => {
+    return signUp({ name, email, password });
   };
 
-  // Update user profile
-  const updateProfile = (updatedData) => {
-    const updatedUser = { ...user, ...updatedData };
-    setUser(updatedUser);
-    localStorage.setItem("user", JSON.stringify(updatedUser));
+  // Logout
+  const logout = async () => {
+    await authClient.signOut();
+  };
+
+  // Update user profile (calls Better Auth API)
+  const updateProfile = async (updatedData) => {
+    // PATCH /api/auth/user or similar endpoint (Better Auth exposes user update)
+    return authClient.updateUser(updatedData);
   };
 
   const value = {
     user,
     isLoggedIn,
-    loading,
+    loading: isLoading,
     login,
+    register,
     logout,
     updateProfile,
   };

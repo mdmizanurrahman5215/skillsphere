@@ -3,16 +3,17 @@
 import { useState } from "react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useAuth } from "@/context/AuthContext";
+
 import { motion } from "framer-motion";
 import { showSuccess, showError } from "@/utils/toast";
+import { authClient } from "../../lib/auth-client";
+import { useAuth } from "@/context/AuthContext";
 
 export default function LoginPage() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const redirect = searchParams.get("redirect") || "/";
-  const { login } = useAuth();
-
+ const { login, setIsLoggedIn } = useAuth();
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -32,23 +33,26 @@ export default function LoginPage() {
     e.preventDefault();
     setIsLoading(true);
 
-    // Simulate API call
-    setTimeout(() => {
-      if (formData.email && formData.password) {
-        const userData = {
-          id: Date.now(),
-          email: formData.email,
-          name: formData.email.split("@")[0],
-          image: `https://api.dicebear.com/7.x/avataaars/svg?seed=${formData.email}`,
-        };
-        login(userData);
-        showSuccess("Login successful!");
-        router.push(redirect);
-      } else {
-        showError("Please fill all fields");
+    try {
+      const { data, error } = await authClient.signIn.email({
+        email: formData.email,
+        password: formData.password,
+        callbackURL: "/",
+      });
+
+      if (error) {
+        showError(error.message || "login failed");
+        return;
       }
-      setIsLoading(false);
-    }, 1000);
+
+      showSuccess("login successful!");
+      setIsLoggedIn(true)
+      router.push("/");
+    } catch (err) {
+      showError(`Something went wrong, ${err.message}`);
+    }
+
+    setIsLoading(false);
   };
 
   return (

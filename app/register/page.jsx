@@ -6,10 +6,11 @@ import { useRouter } from "next/navigation";
 import { useAuth } from "@/context/AuthContext";
 import { motion } from "framer-motion";
 import { showSuccess, showError } from "@/utils/toast";
+import { authClient } from "../../lib/auth-client";
 
 export default function RegisterPage() {
   const router = useRouter();
-  const { login } = useAuth();
+//   const { login } = useAuth();
 
   const [formData, setFormData] = useState({
     name: "",
@@ -32,36 +33,37 @@ export default function RegisterPage() {
     e.preventDefault();
     setIsLoading(true);
 
-    // Validation
     if (formData.password !== formData.confirmPassword) {
       showError("Passwords do not match");
       setIsLoading(false);
       return;
     }
 
-    if (formData.password.length < 6) {
-      showError("Password must be at least 6 characters");
-      setIsLoading(false);
-      return;
+    try {
+      const { data, error } = await authClient.signUp.email({
+        email: formData.email,
+        password: formData.password,
+        name: formData.name,
+        callbackURL: "/login",
+      });
+
+      if (error) {
+        showError(error.message || "Registration failed");
+        return;
+      }
+
+      showSuccess("Registration successful!");
+      router.push("/login");
+    } catch (err) {
+      showError(`Something went wrong, ${err.message}`);
+    }finally {
+         setIsLoading(false);
     }
 
-    setTimeout(() => {
-      if (formData.name && formData.email && formData.password) {
-        const userData = {
-          id: Date.now(),
-          email: formData.email,
-          name: formData.name,
-          image: `https://i.ibb.co.com/KvwXLW1/Confident-portrait-in-navy-blazer.png=${formData.email}`,
-        };
-        login(userData);
-        showSuccess("Registration successful!");
-        router.push("/");
-      } else {
-        showError("Please fill all fields");
-      }
-      setIsLoading(false);
-    }, 1000);
+   
   };
+
+  
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center px-4">
