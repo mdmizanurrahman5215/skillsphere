@@ -3,12 +3,13 @@
 import { useState } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
+import { useAuth } from "@/context/AuthContext";
 
 export default function Navbar() {
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [user, setUser] = useState(true);
-  const [isLoggedIn, setIsLoggedIn] = useState(true);
+   const { user , logout, isLoggedIn } = useAuth();
+  
 
   const handleLogout = () => {
     logout();

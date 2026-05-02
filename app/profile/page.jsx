@@ -1,12 +1,12 @@
 import React from 'react'
 
-const CoursePage = () => {
+const ProfilePage = () => {
   return (
     <div>
- CoursePage
+ ProfilePage
       
     </div>
   )
 }
 
-export default CoursePage
+export default ProfilePage
