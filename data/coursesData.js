@@ -1,12 +1,11 @@
-
-
 export const instructorsData = [
   {
     id: 1,
     name: "John Doe",
     title: "Senior Full Stack Developer",
     bio: "15+ years of experience in web development",
-    image: "https://api.dicebear.com/7.x/avataaars/svg?seed=John",
+    image:
+      "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=500&q=80",
     students: 24500,
     courses: 8,
   },
@@ -15,7 +14,8 @@ export const instructorsData = [
     name: "Sarah Smith",
     title: "React & JavaScript Expert",
     bio: "Specialized in modern JavaScript frameworks",
-    image: "https://api.dicebear.com/7.x/avataaars/svg?seed=Sarah",
+    image:
+      "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=500&q=80",
     students: 18900,
     courses: 6,
   },
@@ -24,7 +24,8 @@ export const instructorsData = [
     name: "Emily Johnson",
     title: "UX/UI Design Lead",
     bio: "Award-winning designer with 12+ years experience",
-    image: "https://api.dicebear.com/7.x/avataaars/svg?seed=Emily",
+    image:
+      "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&w=500&q=80",
     students: 15200,
     courses: 5,
   },
@@ -33,7 +34,8 @@ export const instructorsData = [
     name: "Michael Chen",
     title: "Data Science & AI Specialist",
     bio: "PhD in Machine Learning, industry expert",
-    image: "https://api.dicebear.com/7.x/avataaars/svg?seed=Michael",
+    image:
+      "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=500&q=80",
     students: 22100,
     courses: 7,
   },

@@ -1,7 +1,7 @@
 "use client";
 
 import { instructorsData } from "@/data/coursesData";
-import Link from "next/link";
+
 
 export default function TopInstructors() {
   return (

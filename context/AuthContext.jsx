@@ -1,7 +1,13 @@
 "use client";
 
 import React, { createContext, useContext, useEffect, useState } from "react";
-import { signIn, signUp, useSession, authClient } from "@/lib/auth-client";
+import {
+  signIn,
+  signUp,
+  useSession,
+  authClient,
+  updateUser,
+} from "@/lib/auth-client";
 
 const AuthContext = createContext();
 
@@ -53,8 +59,8 @@ export function AuthProvider({ children }) {
 
   // Update user profile (calls Better Auth API)
   const updateProfile = async (updatedData) => {
-    // PATCH /api/auth/user or similar endpoint (Better Auth exposes user update)
-    return authClient.updateUser(updatedData);
+    // Use updateUser from auth-client.js
+    return updateUser(updatedData);
   };
 
   const value = {
