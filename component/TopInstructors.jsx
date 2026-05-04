@@ -80,12 +80,9 @@ export default function TopInstructors() {
 
         {/* View All Instructors Link */}
         <div className="text-center mt-12">
-          <Link
-            href="/instructors"
-            className="inline-block px-8 py-3 bg-gradient-to-r from-blue-600 to-blue-800 text-white rounded-lg font-bold text-lg hover:from-blue-700 hover:to-blue-900 transition-all duration-300 transform hover:scale-105 shadow-lg"
-          >
+          <div className="inline-block px-8 py-3 bg-gradient-to-r from-blue-600 to-blue-800 text-white rounded-lg font-bold text-lg hover:from-blue-700 hover:to-blue-900 transition-all duration-300 transform hover:scale-105 shadow-lg">
             View All Instructors →
-          </Link>
+          </div>
         </div>
       </div>
     </section>

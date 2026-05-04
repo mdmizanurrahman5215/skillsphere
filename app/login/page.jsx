@@ -13,7 +13,7 @@ export default function LoginPage() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const redirect = searchParams.get("redirect") || "/";
- const { login, setIsLoggedIn } = useAuth();
+  const { login, setIsLoggedIn } = useAuth();
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -37,6 +37,7 @@ export default function LoginPage() {
       const { data, error } = await authClient.signIn.email({
         email: formData.email,
         password: formData.password,
+        rememberMe: true,
         callbackURL: "/",
       });
 
@@ -46,7 +47,7 @@ export default function LoginPage() {
       }
 
       showSuccess("login successful!");
-      setIsLoggedIn(true)
+      setIsLoggedIn(true);
       router.push("/");
     } catch (err) {
       showError(`Something went wrong, ${err.message}`);

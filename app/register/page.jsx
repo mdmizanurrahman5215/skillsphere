@@ -10,7 +10,7 @@ import { authClient } from "../../lib/auth-client";
 
 export default function RegisterPage() {
   const router = useRouter();
-//   const { login } = useAuth();
+  //   const { login } = useAuth();
 
   const [formData, setFormData] = useState({
     name: "",
@@ -44,6 +44,7 @@ export default function RegisterPage() {
         email: formData.email,
         password: formData.password,
         name: formData.name,
+        image: "https://i.ibb.co.com/WNjHKns7/mizan.jpg",
         callbackURL: "/login",
       });
 
@@ -56,14 +57,10 @@ export default function RegisterPage() {
       router.push("/login");
     } catch (err) {
       showError(`Something went wrong, ${err.message}`);
-    }finally {
-         setIsLoading(false);
+    } finally {
+      setIsLoading(false);
     }
-
-   
   };
-
-  
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center px-4">

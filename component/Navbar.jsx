@@ -3,22 +3,34 @@
 import { useState } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { useAuth } from "@/context/AuthContext";
+
+import { useSession, signOut } from "@/lib/auth-client";
 
 export default function Navbar() {
-    const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-   const { user , logout, isLoggedIn } = useAuth();
-  
+
+  const { data, isPending } = useSession();
+  const user = data?.user || null;
+  const isLoggedIn = !!user;
+  console.log(user);
 
   const handleLogout = () => {
-    logout();
+    signOut();
     setIsDropdownOpen(false);
   };
 
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
   };
+
+  if (isPending) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="loader ease-linear rounded-full border-8 border-t-8 border-gray-200 h-16 w-16"></div>
+      </div>
+    );
+  }
 
   return (
     <nav className="bg-gradient-to-r from-blue-600 to-blue-800 text-white shadow-lg">
@@ -180,18 +192,20 @@ export default function Navbar() {
 
             {!isLoggedIn && (
               <div className="mt-4 flex gap-2">
-                <button
-                  onClick={() => {
-                    setIsLoggedIn(true);
-                    setIsMobileMenuOpen(false);
-                  }}
-                  className="flex-1 px-4 py-2 rounded-lg bg-white text-blue-600 font-semibold hover:bg-blue-50 transition"
+                <Link
+                  href="/login"
+                  className="flex-1 px-4 py-2 rounded-lg bg-white text-blue-600 font-semibold hover:bg-blue-50 transition text-center"
+                  onClick={() => setIsMobileMenuOpen(false)}
                 >
                   Login
-                </button>
-                <button className="flex-1 px-4 py-2 rounded-lg border-2 border-white text-white font-semibold hover:bg-blue-700 transition">
+                </Link>
+                <Link
+                  href="/register"
+                  className="flex-1 px-4 py-2 rounded-lg border-2 border-white text-white font-semibold hover:bg-blue-700 transition text-center"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
                   Register
-                </button>
+                </Link>
               </div>
             )}
 
