@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { coursesData } from "@/data/coursesData";
 import { useParams, useRouter } from "next/navigation";
 import Link from "next/link";
 import { useAuth } from "@/context/AuthContext";
@@ -74,11 +73,11 @@ const curriculumData = {
 export default function CourseDetail() {
   const params = useParams();
   const router = useRouter();
-  const { user, isLoggedIn, loading } = useAuth();
+  const { user, isLoggedIn, loading, courseData } = useAuth();
   const [isEnrolled, setIsEnrolled] = useState(false);
 
   const courseId = parseInt(params.id, 10);
-  const course = coursesData.find((c) => c.id === courseId);
+  const course = courseData.find((c) => c.id === courseId);
 
   // Check auth status
   useEffect(() => {

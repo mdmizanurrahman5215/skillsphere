@@ -1,12 +1,13 @@
 "use client";
 
 import Link from "next/link";
-import { coursesData } from "@/data/coursesData";
 import Image from "next/image";
+import { useAuth } from "@/context/AuthContext";
 
 export default function PopularCourses() {
+  const {courseData } = useAuth();
   // Get top 3 courses by rating
-  const topCourses = coursesData
+  const topCourses = courseData
     .sort((a, b) => b.rating - a.rating)
     .slice(0, 3);
 

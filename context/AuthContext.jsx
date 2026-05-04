@@ -1,6 +1,6 @@
 "use client";
 
-import React, { createContext, useContext } from "react";
+import React, { createContext, useContext, useEffect, useState } from "react";
 import { signIn, signUp, useSession, authClient } from "@/lib/auth-client";
 
 const AuthContext = createContext();
@@ -8,7 +8,34 @@ const AuthContext = createContext();
 export function AuthProvider({ children }) {
   const { data: session, isLoading } = useSession();
   const user = session?.user || null;
-  const isLoggedIn = true;
+  const isLoggedIn = true; 
+  const [courseData, setCourseData] = useState([]);
+  
+ const fetchData= async () => {
+  const res = await fetch("data.json");
+  if (!res.ok) {
+    throw new Error("Failed to fetch data");
+  }
+  const data = await res.json();
+  console.log(data);
+  
+  return data;
+}
+
+useEffect(() => {
+  const loadData = async () => {
+    try {
+      const data = await fetchData();
+      setCourseData(data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  loadData();
+}, []);
+console.log(courseData);
+
 
   // Login with Better Auth
   const login = async ({ email, password }) => {
@@ -39,6 +66,8 @@ export function AuthProvider({ children }) {
     register,
     logout,
     updateProfile,
+    courseData,
+    setCourseData,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
