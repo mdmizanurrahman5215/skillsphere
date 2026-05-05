@@ -55,6 +55,17 @@ export default function LoginPage() {
 
     setIsLoading(false);
   };
+  const handleGoogleSignIN = async () => {
+    try {
+      const { data, error } = await authClient.signIn.social({
+        provider: "google",
+        callbackURL: "/",
+      });
+      console.log("google data", data);
+    } catch (err) {
+      showError(`Something went wrong, ${err.message}`);
+    }
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center px-4">
@@ -125,6 +136,19 @@ export default function LoginPage() {
               transition={{ delay: 0.3 }}
             >
               {isLoading ? "Logging in..." : "Log In"}
+            </motion.button>
+            <motion.button
+            
+              disabled={isLoading}
+              onClick={() => handleGoogleSignIN()}
+              className="w-full py-3 bg-gradient-to-r from-blue-600 to-blue-800 text-white rounded-lg font-bold hover:from-blue-700 hover:to-blue-900 transition disabled:opacity-50"
+              whileHover={!isLoading ? { scale: 1.02 } : {}}
+              whileTap={!isLoading ? { scale: 0.98 } : {}}
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3 }}
+            >
+              {isLoading ? "Logging in..." : "Log In with Google"}
             </motion.button>
           </form>
 
