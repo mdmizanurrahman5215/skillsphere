@@ -40,7 +40,7 @@ export function AuthProvider({ children }) {
 
     loadData();
   }, []);
-  console.log(courseData);
+ 
 
   // Login with Better Auth
   const login = async ({ email, password }) => {
