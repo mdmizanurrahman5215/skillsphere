@@ -22,7 +22,7 @@ export default function TopInstructors() {
 
         {/* Instructors Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-          {instructorsData.map((instructor) => (
+          {instructorsData?.map((instructor) => (
             <div
               key={instructor.id}
               className="group bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:scale-105"

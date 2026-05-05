@@ -38,11 +38,11 @@ export default function CoursesPage({ coursesData }) {
   // Get unique categories
   const categories = [
     "All",
-    ...new Set(coursesData.map((course) => course.category)),
+    ...new Set(coursesData?.map((course) => course.category)),
   ];
 
   // Filter courses based on category and search
-  const filteredCourses = coursesData.filter((course) => {
+  const filteredCourses = coursesData?.filter((course) => {
     const matchesCategory =
       selectedCategory === "All" || course.category === selectedCategory;
     const matchesSearch =
@@ -112,7 +112,7 @@ export default function CoursesPage({ coursesData }) {
                   Category
                 </label>
                 <div className="space-y-2">
-                  {categories.map((category) => (
+                  {categories?.map((category) => (
                     <motion.button
                       key={category}
                       onClick={() => setSelectedCategory(category)}
@@ -141,7 +141,7 @@ export default function CoursesPage({ coursesData }) {
                 initial="hidden"
                 animate="visible"
               >
-                {filteredCourses.map((course) => (
+                {filteredCourses?.map((course) => (
                   <motion.div
                     key={course.id}
                     variants={itemVariants}
@@ -195,7 +195,7 @@ export default function CoursesPage({ coursesData }) {
                       <div className="flex items-center justify-between mb-4">
                         <div className="flex items-center gap-2">
                           <div className="flex gap-1">
-                            {[...Array(5)].map((_, i) => (
+                            {[...Array(5)]?.map((_, i) => (
                               <span
                                 key={i}
                                 className={
@@ -310,7 +310,7 @@ export default function CoursesPage({ coursesData }) {
               whileInView="visible"
               viewport={{ once: true }}
             >
-              {trendingCourses.map((course) => (
+              {trendingCourses?.map((course) => (
                 <motion.div
                   key={course.id}
                   variants={itemVariants}
@@ -345,7 +345,7 @@ export default function CoursesPage({ coursesData }) {
 
                     <div className="flex items-center justify-between mb-4">
                       <div className="flex gap-1">
-                        {[...Array(5)].map((_, i) => (
+                        {[...Array(5)]?.map((_, i) => (
                           <span
                             key={i}
                             className={

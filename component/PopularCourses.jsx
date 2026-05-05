@@ -29,7 +29,7 @@ export default function PopularCourses() {
 
         {/* Top 3 Courses Grid */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
-          {topCourses.map((course, index) => (
+          {topCourses?.map((course, index) => (
             <div
               key={course.id}
               className="group bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:scale-105"

@@ -83,7 +83,7 @@ export default function Banner() {
         loop={true}
         className="w-full h-full"
       >
-        {slides.map((slide) => (
+        {slides?.map((slide) => (
           <SwiperSlide key={slide.id}>
             <div
               className="w-full h-full flex items-center justify-center relative overflow-hidden"

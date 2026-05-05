@@ -22,7 +22,7 @@ export default function LearningTips() {
 
         {/* Tips Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {learningTips.map((tip) => (
+          {learningTips?.map((tip) => (
             <div
               key={tip.id}
               className="group p-8 bg-gradient-to-br from-gray-50 to-gray-100 rounded-xl border-2 border-transparent hover:border-blue-400 transition-all duration-300 hover:shadow-xl hover:scale-105"

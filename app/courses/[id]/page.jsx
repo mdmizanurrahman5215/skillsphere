@@ -315,8 +315,8 @@ export default function CourseDetail() {
                 📚 Course Curriculum
               </h2>
               <div className="space-y-4">
-                {curriculum.length > 0 ? (
-                  curriculum.map((section, index) => (
+                {curriculum?.length > 0 ? (
+                  curriculum?.map((section, index) => (
                     <motion.div
                       key={section.id}
                       className="border-2 border-gray-200 rounded-lg p-4 hover:border-blue-500 transition cursor-pointer"
@@ -392,7 +392,7 @@ export default function CourseDetail() {
               </h3>
               <div className="text-center">
                 <div className="flex justify-center gap-1 mb-2">
-                  {[...Array(5)].map((_, i) => (
+                  {[...Array(5)]?.map((_, i) => (
                     <span
                       key={i}
                       className={
