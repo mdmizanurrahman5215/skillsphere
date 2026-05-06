@@ -54,7 +54,7 @@ export default function CoursesPage({ coursesData }) {
 
   // Get trending courses
   const trendingCourses = coursesData
-    .filter((course) => course.isTrending)
+    ?.filter((course) => course.isTrending)
     .slice(0, 6);
 
   if (isLoading) {
