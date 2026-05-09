@@ -1,7 +1,7 @@
 # 🎓 SkillSphere – Online Learning Platform
 
 ## 🌐 Live Demo  
-https://skillsphere-irqd.vercel.app/
+https://skillsphere-irqd.vercel.app
 
 ## 📂 GitHub Repository  
 https://github.com/mdmizanurrahman5215/skillsphere
