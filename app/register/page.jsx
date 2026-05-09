@@ -3,14 +3,14 @@
 import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useAuth } from "@/context/AuthContext";
+
 import { motion } from "framer-motion";
 import { showSuccess, showError } from "@/utils/toast";
 import { authClient } from "../../lib/auth-client";
 
 export default function RegisterPage() {
   const router = useRouter();
-  //   const { login } = useAuth();
+
 
   const [formData, setFormData] = useState({
     name: "",

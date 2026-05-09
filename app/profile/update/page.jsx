@@ -3,13 +3,16 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useAuth } from "@/context/AuthContext";
 import { motion } from "framer-motion";
 import Loader from "@/component/Loader";
 import { showSuccess, showError } from "@/utils/toast";
+import { authClient, useSession } from "../../../lib/auth-client";
 
 export default function UpdateProfilePage() {
-  const { user, isLoggedIn, loading, updateProfile } = useAuth();
+  const { data, isPending } = useSession();
+  const user = data?.user || null;
+  const isLoggedIn = !!user;
+
   const router = useRouter();
 
   const [formData, setFormData] = useState({
@@ -19,66 +22,35 @@ export default function UpdateProfilePage() {
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [previewImage, setPreviewImage] = useState("");
-
-  // Initialize form with user data
-  useEffect(() => {
-    if (!loading && !isLoggedIn) {
-      router.push("/login?redirect=/profile/update");
-    }
-
-    if (user) {
-      setFormData({
-        name: user.name || "",
-        image: user.image || "",
-      });
-      setPreviewImage(user.image || "");
-    }
-  }, [user, isLoggedIn, loading, router]);
-
-  if (loading) {
-    return <Loader />;
-  }
-
-  if (!isLoggedIn) {
-    return null;
-  }
-
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({
       ...prev,
       [name]: value,
     }));
-
-    if (name === "image") {
-      setPreviewImage(value);
-    }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setIsSubmitting(true);
+
     try {
-      if (!formData.name.trim()) {
-        showError("Name cannot be empty");
-        setIsSubmitting(false);
-        return;
-      }
-      if (!formData.image.trim()) {
-        showError("Image URL cannot be empty");
-        setIsSubmitting(false);
-        return;
-      }
-      await updateProfile({
-        name: formData.name,
-        image: formData.image,
+      setIsSubmitting(true);
+
+      await authClient.updateUser({
+        image: formData?.image,
+        name: formData?.name,
       });
+
       showSuccess("Profile updated successfully!");
       router.push("/profile");
-    } catch (err) {
-      showError(err?.message || "Profile update failed");
+
+      console.log(formData);
+    } catch (error) {
+      console.log(error);
+      showError("Failed to update profile");
+    } finally {
+      setIsSubmitting(false);
     }
-    setIsSubmitting(false);
   };
 
   return (
@@ -139,7 +111,7 @@ export default function UpdateProfilePage() {
                 Profile Image URL
               </label>
               <input
-                type="url"
+                // type="url"
                 name="image"
                 value={formData.image}
                 onChange={handleChange}
@@ -152,7 +124,7 @@ export default function UpdateProfilePage() {
             </motion.div>
 
             {/* Image Preview */}
-            {previewImage && (
+            {/* {previewImage && (
               <motion.div
                 className="flex flex-col items-center gap-4"
                 initial={{ opacity: 0, y: 10 }}
@@ -172,7 +144,7 @@ export default function UpdateProfilePage() {
                   whileHover={{ scale: 1.05 }}
                 />
               </motion.div>
-            )}
+            )} */}
 
             {/* Error Message for Invalid Image */}
             {previewImage === "" && formData.image && (

@@ -3,12 +3,16 @@
 import { useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useAuth } from "@/context/AuthContext";
 import { motion } from "framer-motion";
 import Loader from "@/component/Loader";
+import { signOut, useSession } from "../../lib/auth-client";
 
 export default function ProfilePage() {
-  const { user, isLoggedIn, loading, logout } = useAuth();
+  const { data: session, isLoading } = useSession();
+  const user = session?.user || null;
+  const isLoggedIn = !!user;
+  const loading = isLoading;
+
   const router = useRouter();
 
   useEffect(() => {
@@ -26,7 +30,7 @@ export default function ProfilePage() {
   }
 
   const handleLogout = async () => {
-    await logout();
+    await signOut();
     router.push("/");
   };
 

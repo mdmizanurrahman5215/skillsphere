@@ -1,13 +1,7 @@
 "use client";
 
 import React, { createContext, useContext, useEffect, useState } from "react";
-import {
-  signIn,
-  signUp,
-  useSession,
-  authClient,
-  updateUser,
-} from "@/lib/auth-client";
+import { signIn, signUp, useSession, authClient } from "@/lib/auth-client";
 
 const AuthContext = createContext();
 
@@ -18,7 +12,7 @@ export function AuthProvider({ children }) {
   const [courseData, setCourseData] = useState([]);
 
   const fetchData = async () => {
-    const res = await fetch("data.json");
+    const res = await fetch("/data.json");
     if (!res.ok) {
       throw new Error("Failed to fetch data");
     }
@@ -40,7 +34,6 @@ export function AuthProvider({ children }) {
 
     loadData();
   }, []);
- 
 
   // Login with Better Auth
   const login = async ({ email, password }) => {
@@ -57,12 +50,6 @@ export function AuthProvider({ children }) {
     await authClient.signOut();
   };
 
-  // Update user profile (calls Better Auth API)
-  const updateProfile = async (updatedData) => {
-    // Use updateUser from auth-client.js
-    return updateUser(updatedData);
-  };
-
   const value = {
     user,
     isLoggedIn,
@@ -70,7 +57,6 @@ export function AuthProvider({ children }) {
     login,
     register,
     logout,
-    updateProfile,
     courseData,
     setCourseData,
   };

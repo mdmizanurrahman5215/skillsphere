@@ -82,12 +82,12 @@ export default function Navbar() {
                   whileTap={{ scale: 0.95 }}
                 >
                   <img
-                    src={user.image}
-                    alt={user.name}
+                    src={user?.image}
+                    alt={user?.name}
                     className="w-8 h-8 rounded-full border-2 border-white object-cover"
                   />
                   <span className="hidden sm:inline text-sm font-medium">
-                    {user.name}
+                    {user?.name}
                   </span>
                 </motion.button>
 
